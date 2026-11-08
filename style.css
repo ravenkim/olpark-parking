@@ -1,0 +1,71 @@
+/* achromatic-ledger (seed 1391936910, --keep type) — 면: 공원 세이지 바탕, 선택 시간 막대 하나에만 파랑. 글꼴은 레포 규칙대로 Pretendard. */
+:root {
+  --ground: #f2f5f2;
+  --surface: #ffffff;
+  --raised: #eef0ee;
+  --active: #e6e9e6;
+  --border: #e3e6e3;
+  --rule: #eef0ee;
+  --control: #d4d4d4;
+  --text: #0a0a0a;
+  --muted: #5e635e;
+  --faint: #636863;
+  --accent: #141414;
+  --primary: #141414;
+  --chart-1: #1d5fbf;      /* 화면의 주 데이터: 선택한 시간, 평소보다 많은 시간 */
+  --chart-2: #8a8a8a;
+  --chart-muted: #c9cec9;
+  --font: "Pretendard Variable", Pretendard, system-ui, sans-serif;
+  --fs-title: 28px; --fs-section: 16px; --fs-kpi: 40px; --fs-body: 15px; --fs-small: 13px;
+  --radius-card: 8px; --radius-control: 6px;
+  --gap: 12px; --pad: 32px; --card-pad: 24px; --control-height: 38px; --row-height: 44px;
+}
+
+/* 사이드바 없는 한 화면 서비스: 1120px 가운데 열.
+   12열 × (1120 − 11×12)/12 = 82.3px, 8+4 · 6+6 · 8+4 로 양 끝 맞춤. */
+.bar, .canvas { max-width: 1184px; margin: 0 auto; padding-left: var(--pad); padding-right: var(--pad); }
+.bar { display: flex; align-items: center; justify-content: space-between; height: 56px; }
+.wordmark { font-weight: 700; font-size: 16px; }
+.canvas { padding-top: 16px; padding-bottom: 64px; }
+.title-row h1 { font-size: var(--fs-title); font-weight: 700; letter-spacing: -0.02em; }
+.title-row .sub { font-size: var(--fs-body); margin-top: 6px; }
+
+.filters { gap: 16px 20px; margin: 24px 0 20px; align-items: flex-end; }
+.ctl { display: grid; gap: 6px; font-size: var(--fs-small); color: var(--muted); }
+.ctl .input { color: var(--text); font-size: var(--fs-body); min-width: 150px; }
+.switch-ctl { display: flex; align-items: center; gap: 10px; height: 38px; color: var(--text); font-size: var(--fs-body); }
+.filters .stamp { align-self: center; color: var(--muted); font-size: var(--fs-body); }
+
+.span-8 { grid-column: span 8; } .span-6 { grid-column: span 6; } .span-4 { grid-column: span 4; }
+.panel > header { margin-bottom: 12px; }
+.answer { margin-bottom: 12px; }
+.kpi-value { font-size: var(--fs-kpi); font-weight: 700; letter-spacing: -0.02em; margin: 0; }
+.finding { font-size: var(--fs-body); line-height: 22px; margin-bottom: 8px; max-width: 60ch; }
+.note { margin-top: 12px; color: var(--muted); font-size: var(--fs-small); line-height: 18px; }
+
+#zones th[scope="row"] { font-weight: 500; font-size: var(--fs-body); color: var(--text); text-align: left; height: auto; border-bottom: 1px solid var(--rule); padding: 0 12px; }
+#zones tbody tr:last-child th { border-bottom: 0; }
+#zones tr.best th, #zones tr.best td:first-of-type { font-weight: 700; }
+
+#concerts .row { gap: 16px; }
+.date-btn { flex: none; height: 32px; padding: 0 10px; border: 1px solid var(--control); border-radius: var(--radius-control); background: var(--surface); cursor: pointer; transition: background-color var(--t-hover) ease, transform var(--t-press) var(--ease-out); }
+.date-btn:hover { background: var(--raised); }
+.date-btn:active { transform: translateY(1px); }
+.truncate-2 { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.dow { flex: none; color: var(--muted); }
+.more { margin-top: 12px; }
+.src .row { justify-content: space-between; }
+.src a { text-decoration: underline; text-underline-offset: 3px; }
+.src .num { color: var(--muted); font-size: var(--fs-small); }
+
+@media (max-width: 860px) {
+  .panel > header { flex-wrap: wrap; justify-content: flex-start; gap: 2px 12px; }
+  .panel > header h2 { flex-basis: 100%; }
+  .bar, .canvas { padding-left: 16px; padding-right: 16px; }
+  .grid > * { grid-column: 1 / -1; }
+  .title-row h1 { font-size: 24px; }
+  .kpi-value { font-size: 32px; }
+  .ctl, .ctl .input { width: 100%; }
+  .filters { display: grid; grid-template-columns: 1fr 1fr; }
+  .switch-ctl, .filters .stamp { grid-column: 1 / -1; }
+}
