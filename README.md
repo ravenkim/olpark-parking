@@ -4,5 +4,6 @@
 
 - 2026 한국체육산업개발 공공데이터 활용 경진대회 출품작
 - 데이터: 한국체육산업개발(주) 공공데이터(공공데이터포털) — 올림픽공원 주차장 입출차, 주차장 혼잡도, 월별 주차현황, 공연정보
+- 화면: React + shadcn/ui (MIT) · 그래프 Recharts (MIT) · 달력 react-day-picker·date-fns (MIT)
 - 글꼴: Pretendard (SIL OFL 1.1)
-- 그래프: Apache ECharts 5.6.0 (Apache-2.0, vendor/ECHARTS-LICENSE.txt)
+- 이 레포는 빌드 결과(dist)입니다. 소스는 Vite + React + TypeScript.
