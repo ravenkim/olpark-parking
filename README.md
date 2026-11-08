@@ -5,3 +5,4 @@
 - 2026 한국체육산업개발 공공데이터 활용 경진대회 출품작
 - 데이터: 한국체육산업개발(주) 공공데이터(공공데이터포털) — 올림픽공원 주차장 입출차, 주차장 혼잡도, 월별 주차현황, 공연정보
 - 글꼴: Pretendard (SIL OFL 1.1)
+- 그래프: Apache ECharts 5.6.0 (Apache-2.0, vendor/ECHARTS-LICENSE.txt)

@@ -5,28 +5,31 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>올팍 주차 타이밍 — 올림픽공원 방문 시간·주차구역 추천</title>
 <meta name="description" content="한국체육산업개발 공공데이터(입출차·주차장 혼잡도·월별주차·공연정보)로 올림픽공원 방문 시간과 덜 붐비는 주차구역을 알려줍니다.">
+<link rel="preload" href="fonts/pretendard/variable/PretendardVariable.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="fonts/pretendard/variable/pretendardvariable.css">
 <link rel="stylesheet" href="app.css">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 <header class="bar">
-  <a class="wordmark" href="./">올팍 주차 타이밍</a>
+  <a class="brand" href="./" aria-label="올팍 주차 타이밍 처음으로">
+    <svg class="mark" viewBox="0 0 28 28" aria-hidden="true"><rect width="28" height="28" rx="7"/><path d="M10 21V7h5.2a4.4 4.4 0 0 1 0 8.8H10"/></svg>
+    <span class="brand-name">올팍 주차 타이밍</span>
+    <span class="scope">올림픽공원 주차장 11개 구역</span>
+  </a>
   <a class="card-link" href="#sources">데이터 출처</a>
 </header>
 
 <main class="canvas">
   <div class="title-row">
-    <div>
-      <h1>올림픽공원, 몇 시에 어디에 댈까</h1>
-      <p class="sub">한국체육산업개발 입출차 기록 215,528건과 주차구역 혼잡도 699건으로 계산한 방문 시간·주차장 추천</p>
-    </div>
+    <h1>올림픽공원, 몇 시에 어디에 댈까</h1>
+    <p class="sub">입출차 기록 215,528건과 주차구역 혼잡도 699건으로 계산했습니다.</p>
   </div>
 
   <form class="filters" id="pick" aria-label="방문 조건">
     <label class="ctl"><span>방문 날짜</span><input class="input" type="date" id="date" required></label>
     <label class="ctl"><span>도착 시각</span><select class="input" id="hour"></select></label>
-    <label class="ctl switch-ctl"><input class="switch" type="checkbox" id="concert"><span>공연·행사 있는 날</span></label>
+    <label class="switch-ctl"><input class="switch" type="checkbox" id="concert"><span>공연·행사 있는 날</span></label>
     <p class="stamp" id="concert-name" aria-live="polite"></p>
   </form>
 
@@ -37,36 +40,33 @@
         <p class="kpi-value num" id="kpi"></p>
         <p class="finding" id="finding" aria-live="polite"></p>
       </div>
-      <div class="chart" id="chart-hours"></div>
+      <div class="chart" id="chart-hours" role="img" aria-label="시간대별 예상 입차 막대그래프. 막대를 누르면 그 시각으로 바꿉니다."></div>
       <noscript><p>이 화면은 자바스크립트로 데이터를 계산합니다.</p></noscript>
     </section>
 
     <section class="panel span-4" aria-labelledby="h-zones">
       <header><h2 id="h-zones">덜 붐비는 주차구역</h2><span class="meta">만차였던 비율 낮은 순</span></header>
-      <div class="table-wrap">
-        <table id="zones">
-          <thead><tr><th scope="col">구역</th><th scope="col" class="n">만차 비율</th><th scope="col" class="n">원활</th><th scope="col" class="n">기록</th></tr></thead>
-          <tbody></tbody>
-        </table>
+      <ol class="zones" id="zones"></ol>
+      <div class="panel-foot">
+        <button type="button" class="card-link" id="zones-all" aria-expanded="false" aria-controls="zones"></button>
+        <p class="note">혼잡도 기록 2025-02~2026-08, 대부분 주말</p>
       </div>
-      <button type="button" class="card-link more" id="zones-all" aria-expanded="false" aria-controls="zones"></button>
-      <p class="note">기록은 2025-02~2026-08 혼잡도 공개 시점 기준이며 주말이 대부분입니다.</p>
     </section>
 
     <section class="panel span-6" aria-labelledby="h-uplift">
       <header><h2 id="h-uplift">공연 있는 날, 시간대별 입차 변화</h2><span class="meta">같은 요일 평소 대비</span></header>
       <p class="finding" id="uplift-finding"></p>
-      <div class="chart" id="chart-uplift"></div>
+      <div class="chart" id="chart-uplift" role="img" aria-label="공연일 시간대별 입차 증감 막대그래프"></div>
     </section>
 
     <section class="panel span-6" aria-labelledby="h-monthly">
-      <header><h2 id="h-monthly">월별 주차대수</h2><span class="meta" id="monthly-legend"></span></header>
+      <header><h2 id="h-monthly">월별 주차대수</h2><span class="legend" id="monthly-legend"></span></header>
       <p class="finding" id="monthly-finding"></p>
-      <div class="chart" id="chart-monthly"></div>
+      <div class="chart" id="chart-monthly" role="img" aria-label="올림픽공원과 미사경정공원 월별 주차대수 꺾은선그래프"></div>
     </section>
 
     <section class="panel span-8" aria-labelledby="h-concerts">
-      <header><h2 id="h-concerts">최근 올림픽공원 공연</h2><span class="meta">날짜를 누르면 그날로 계산합니다</span></header>
+      <header><h2 id="h-concerts">최근 올림픽공원 공연</h2><span class="meta">날짜를 누르면 그날 17시로 계산</span></header>
       <ul class="rows" id="concerts"></ul>
     </section>
 
@@ -78,13 +78,13 @@
         <li class="row"><a href="https://www.data.go.kr/data/15131671/fileData.do">월별주차현황</a><span class="num">2023-01~2025-12</span></li>
         <li class="row"><a href="https://www.data.go.kr/data/15149169/fileData.do">영문 공연정보</a><span class="num">286건</span></li>
       </ul>
-      <p class="note">모두 한국체육산업개발(주) 개방 데이터, 공공데이터포털 이용허락범위 제한 없음. 입출차는 2024년 7월 한 달, 공연일 보정은 그달 공연 시작일 3일로 계산했습니다.</p>
+      <p class="note">모두 한국체육산업개발(주) 개방 데이터, 공공데이터포털 이용허락범위 제한 없음. 입출차는 2024년 7월 한 달, 공연일 보정은 그달 공연 시작일 3일로 계산했습니다. 그래프: Apache ECharts (Apache-2.0).</p>
     </section>
   </div>
 </main>
 
+<script src="vendor/echarts.min.js"></script>
 <script src="data.js"></script>
-<script src="charts.js"></script>
 <script src="main.js"></script>
 </body>
 </html>
